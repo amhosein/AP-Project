@@ -4,6 +4,7 @@ import Exeptions.MyException;
 import Model.Cards.Cards;
 import Model.Cards.Hero;
 import Model.Primary;
+import View.Output.Print;
 import com.gilecode.yagson.YaGson;
 import com.gilecode.yagson.com.google.gson.Gson;
 import com.gilecode.yagson.com.google.gson.GsonBuilder;
@@ -58,6 +59,7 @@ public class Player {
             Player.search(player.getUsername());
             return true;
         } catch (MyException e) {
+            new Print(e.getMessage());
             return false;
         }
     }

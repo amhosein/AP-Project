@@ -2,6 +2,7 @@ package Controller.Input;
 
 import Model.Accont.Player;
 import View.Output.Output;
+import View.Output.Print;
 
 import java.util.Scanner;
 import java.util.regex.Matcher;
@@ -20,11 +21,12 @@ public class CheckList {
         Patterns pattern = new Patterns();
         if (pattern.signUp.matcher(input).find()) {
             Scanner input = new Scanner(System.in);
-            System.out.print(Output.getUserName.getMassage());
+            new Print(Output.getUserName);
             String userName = input.next();
-            System.out.print(Output.getPassword.getMassage());
+            new Print(Output.getPassword);
             String password = input.next();
             new Player(userName,password);
+
         } else if (pattern.signIn.matcher(input).find()) {
             //load player profile
         }

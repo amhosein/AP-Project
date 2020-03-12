@@ -2,7 +2,8 @@ package View.Output;
 
 public enum Output {
     welCome("Welcome to HeathStone! " +
-            "Sign in / Sign up ?"),
+            "Sign in / Sign up ?" +
+            ""),
     getUserName("Username:"),
     getPassword("Password:")
     ;
