@@ -18,14 +18,13 @@ public class CheckList {
     private void checkMassage() {
         Matcher matcher;
         Patterns pattern = new Patterns();
-        System.out.println(Output.welCome.getMassage());
         if (pattern.signUp.matcher(input).find()) {
             Scanner input = new Scanner(System.in);
             System.out.print(Output.getUserName.getMassage());
             String userName = input.next();
             System.out.print(Output.getPassword.getMassage());
             String password = input.next();
-            Player player = new Player(userName,password);
+            new Player(userName,password);
         } else if (pattern.signIn.matcher(input).find()) {
             //load player profile
         }

@@ -1,5 +1,6 @@
 package Model.Accont;
 
+import Exeptions.MyException;
 import Model.Cards.Cards;
 import Model.Cards.Hero;
 import Model.Primary;
@@ -17,38 +18,55 @@ import java.util.ArrayList;
 public class Player {
     private Hero hero;
     private ArrayList<Cards> cards;
-    protected String username;
-    protected String password;
+    private String username;
+    private String password;
 
-    public Player(String username,String password){
-        this.username=username;
-        this.password=password;
+    public Player(String username, String password) {
+        this.username = username;
+        this.password = password;
         newAccount();
     }
 
-    private void newAccount(){
-        if (hasAccount(this)){
+    private void newAccount() {
+        if (!hasAccount(this)) {
             playersList().add(this);
-            Gson gson = new Gson();
-            try {
-                FileWriter fileWriter= new FileWriter("Accounts.json",true);
-                gson.toJson(this,fileWriter);
-                fileWriter.close();
-            }catch (IOException e){
-            }
-
+            save(this);
         }
     }
 
-    private static boolean hasAccount(Player player){
-        if (Player.playersList().contains(player)){
+    private void save(Player player) {
+        Gson gson = new GsonBuilder().setPrettyPrinting().create();
+        try {
+            FileWriter fileWriter = new FileWriter("Accounts.json", true);
+            gson.toJson(player, fileWriter);
+            fileWriter.close();
+        } catch (IOException e) {
+        }
+    }
+
+    private static Player search(String username) throws MyException {
+        for (Player other : playersList()) {
+            if (other.getUsername().equals(username)) {
+                return other;
+            }
+        }
+        throw MyException.invalidUser;
+    }
+
+    private static boolean hasAccount(Player player) {
+        try {
+            Player.search(player.getUsername());
+            return true;
+        } catch (MyException e) {
             return false;
         }
-        return true;
     }
-    private static ArrayList<Player> playersList(){
+
+    public String getUsername() {
+        return username;
+    }
+
+    private static ArrayList<Player> playersList() {
         return Primary.players;
     }
-
-
 }
