@@ -1,17 +1,14 @@
-import Controller.Input.CheckList;
+
+import Controller.Menu.LoginMenu;
+import Model.Primary;
+import View.Menu.MenuHandler;
 import View.Output.Output;
 import View.Output.Print;
 
-import java.util.Scanner;
-
 public class Main {
     public static void main(String[] args) {
-        boolean isRunnig = true;
-        CheckList checkList;
+        Primary.init();
         new Print(Output.welCome);
-        Scanner input = new Scanner(System.in);
-        while (isRunnig) {
-            new CheckList(input.nextLine().toLowerCase());
-        }
+        MenuHandler.initMenu();
     }
 }

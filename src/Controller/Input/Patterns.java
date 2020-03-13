@@ -5,7 +5,6 @@ import java.util.regex.Pattern;
 public class Patterns {
     Pattern signUp = Pattern.compile("sign up");
     Pattern signIn = Pattern.compile("sign in");
-    Pattern exit = Pattern.compile("exit");
-    Pattern forceExit = Pattern.compile("force exit");
-
+    Pattern logout = Pattern.compile("logout");
+    Pattern forceStop = Pattern.compile("force Stop");
 }
