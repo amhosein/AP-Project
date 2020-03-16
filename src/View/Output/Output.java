@@ -1,12 +1,12 @@
 package View.Output;
 
 public enum Output {
-    welCome("Welcome to HeathStone! " +
-            "Sign in / Sign up ?" +
-            ""),
+    welCome("Welcome to HeathStone! \n"),
     getUserName("Username:"),
-    getPassword("Password:")
-    ;
+    getPassword("Password:"),
+    SuccessFullSingUp("You Signed Up SuccessFully! \n\n"),
+    SuccessFullLogin("You Logged in SuccessFully! \n\n");
+
     private String Massage;
 
     Output(String Massage) {

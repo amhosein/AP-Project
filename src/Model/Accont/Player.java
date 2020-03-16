@@ -1,27 +1,28 @@
 package Model.Accont;
 
+import Model.Cards.Card;
+import Model.Menu.LoginMenu;
 import Exeptions.MyException;
-import Model.Cards.Cards;
 import Model.Cards.Hero;
-import Model.Primary;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
 import java.io.FileWriter;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 
 public class Player {
-    private static boolean logged = true;
+    private static boolean logged = false;
     public static Set<Player> players = new HashSet<>();
-    private Hero hero;
-    private ArrayList<Cards> cards;
+    private ArrayList<Hero> unlockedHeroes;
+    private ArrayList<Card> unlockedCards;
     private String username;
     private String password;
+    private Hero currentHero;
+    HashMap<Hero, ArrayList<Card>> Decks = new HashMap<>();
+    public boolean isDeleted = false;
+    public int gold = 50;
 
     public Player(String username, String password) throws MyException {
         this.username = username;
@@ -53,25 +54,22 @@ public class Player {
         }
     }
 
-    public static Player load(String username, String password) throws MyException {
+    public static void load(String username, String password) throws MyException {
         try {
             Player player = search(username);
             if (player.getPassword().equals(password)) {
                 logged = true;
-                return player;
-            }
-            throw new MyException("Wrong Password!");
+                LoginMenu.getLoginMenu().setOnline(player);
+            } else throw new MyException("Wrong Password!");
         } catch (MyException e) {
-            throw MyException.invalidUser;
+            throw e;
         }
     }
 
     private static Player search(String username) throws MyException {
-        if (players != null) {
-            for (Player other : players) {
-                if (other.getUsername().equals(username)) {
-                    return other;
-                }
+        for (Player other : players) {
+            if (other.getUsername().equals(username)) {
+                return other;
             }
         }
         throw MyException.invalidUser;
@@ -87,6 +85,39 @@ public class Player {
     }
 
 
+    public HashMap<Hero, ArrayList<Card>> getDecks() {
+        return Decks;
+    }
+
+    public static Set<Player> getPlayers() {
+        return players;
+    }
+
+    public void setGold(int gold) {
+        this.gold = gold;
+    }
+
+    public int getGold() {
+        return gold;
+    }
+
+    public ArrayList<Hero> getUnlockedHeroes() {
+        return unlockedHeroes;
+    }
+
+    public ArrayList<Card> getUnlockedCards() {
+        return unlockedCards;
+    }
+
+    public void addUnlockedCards(Card newCard) {
+        this.unlockedCards.add(newCard);
+    }
+
+
+    public void addUnlockedHeroes(Hero newHero) {
+        this.unlockedHeroes.add(newHero);
+    }
+
     public String getUsername() {
         return username;
     }
@@ -101,5 +132,13 @@ public class Player {
 
     public void setLogged(boolean logged) {
         this.logged = logged;
+    }
+
+    public Hero getCurrentHero() {
+        return currentHero;
+    }
+
+    public void setCurrentHero(Hero currentHero) {
+        this.currentHero = currentHero;
     }
 }

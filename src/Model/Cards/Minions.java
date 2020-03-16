@@ -1,10 +1,11 @@
 package Model.Cards;
 
-public class Minions extends Cards {
+import java.util.ArrayList;
 
-    Minions(int Mana, int Health, int Damage,
-            Rarity rarity, String Name, String Description) {
-        super(Mana, Health, Damage, rarity, Name, Description);
+public class Minions extends Card {
 
+    public Minions(String Name, int Mana, int Health, int Damage,
+                   Rarity rarity, String Description, ArrayList<Abilities> abilities) {
+        super(Name, Mana, Health,Damage , rarity, Description,abilities);
     }
 }
