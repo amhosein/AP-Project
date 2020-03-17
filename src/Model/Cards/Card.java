@@ -10,20 +10,20 @@ public class Card {
     int HP;
     int Damage;
     int cast = 20;
+    Classes cardClass;
     Rarity Rarity;
     String Name;
     String Description;
     ArrayList<Abilities> abilities;
 
-
-    Card(String Name, int Mana, int HP, int Damage,
-         Rarity rarity, String Description, ArrayList<Abilities> abilities) {
-        this.Mana = Mana;
-        this.HP = HP;
-        this.Damage = Damage;
+    public Card(String name, int mana, int hp, int damage, Classes cardClass, Rarity rarity, String description, ArrayList<Abilities> abilities) {
+        this.Mana = mana;
+        this.HP = hp;
+        this.Damage = damage;
+        this.cardClass = cardClass;
         this.Rarity = rarity;
-        this.Name = Name;
-        this.Description = Description;
+        this.Name = name;
+        this.Description = description;
         this.abilities = abilities;
     }
 
@@ -46,5 +46,12 @@ public class Card {
 
     public int getCast() {
         return cast;
+    }
+
+    public enum Classes {
+        JackSparrow,
+        Zeus,
+        TsubasaOzara,
+        Neutral
     }
 }

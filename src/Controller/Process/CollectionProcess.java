@@ -27,7 +27,7 @@ public class CollectionProcess extends MainProcess {
                 }
                 CardsCollection.getCardsCollection().enterMenu(CardsCollection.getCardsCollection());
             } else if (pattern.allHeroes.matcher(input).find()) {
-                for (Hero hero : Primary.AllHeroes) {
+                for (Hero hero : Primary.allHeroes) {
                     new Print(hero.getName());
                 }
                 CardsCollection.getCardsCollection().enterMenu(CardsCollection.getCardsCollection());

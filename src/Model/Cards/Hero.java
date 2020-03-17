@@ -32,8 +32,8 @@ public class Hero {
     }
 
     public static Hero search(String name) throws MyException {
-        for (Hero hero : Primary.AllHeroes) {
-            if (hero.getName() == name) {
+        for (Hero hero : Primary.allHeroes) {
+            if (hero.getName().equals(name)) {
                 return hero;
             }
         }
