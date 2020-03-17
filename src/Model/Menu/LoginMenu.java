@@ -17,10 +17,6 @@ public class LoginMenu extends Menu {
     }
 
     public void call() {
-        System.out.println(name);
-        for (String order : menuOrders()) {
-            System.out.println(order);
-        }
         this.process();
     }
 }

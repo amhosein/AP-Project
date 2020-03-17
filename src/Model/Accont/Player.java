@@ -11,17 +11,19 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.*;
 
+import static Model.Primary.players;
+
 
 public class Player {
     private static boolean logged = false;
-    public static Set<Player> players = new HashSet<>();
-    private ArrayList<Hero> unlockedHeroes;
-    private ArrayList<Card> unlockedCards;
+    private ArrayList<Hero> unlockedHeroes = new ArrayList<>();
+    private ArrayList<Card> unlockedCards = new ArrayList<>();
     private String username;
     private String password;
     private Hero currentHero;
     HashMap<Hero, ArrayList<Card>> Decks = new HashMap<>();
-    public boolean isDeleted = false;
+    public boolean Deleted = false;
+
     public int gold = 50;
 
     public Player(String username, String password) throws MyException {
@@ -113,6 +115,13 @@ public class Player {
         this.unlockedCards.add(newCard);
     }
 
+    public boolean isDeleted() {
+        return Deleted;
+    }
+
+    public void setDeleted(boolean deleted) {
+        Deleted = deleted;
+    }
 
     public void addUnlockedHeroes(Hero newHero) {
         this.unlockedHeroes.add(newHero);

@@ -5,18 +5,21 @@ import Model.Accont.Player;
 import Model.Cards.*;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+import com.google.gson.stream.JsonReader;
 
 import java.io.*;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashSet;
 import java.util.Set;
 
 public class Primary {
 
     public static ArrayList<Card> allCards = new ArrayList<>();
     public static ArrayList<Hero> AllHeroes = new ArrayList<>();
+    public static Set<Player> players = new HashSet<>();
 
 
     public static void init() {
@@ -71,19 +74,15 @@ public class Primary {
     }
 
     private static void initPlayers() {
-
-        try {
-            Player.players.add(new Player("admin", "admin"));
-        } catch (MyException e) {
-            e.printStackTrace();
-        }
         try {
             FileReader fileReader = new FileReader("Accounts.json");
             BufferedReader bufferedReader = new BufferedReader(fileReader);
             Gson gson = new Gson();
             Type playersList = new TypeToken<Set<Player>>() {
             }.getType();
-            Player.players = gson.fromJson(bufferedReader, playersList);
+            JsonReader reader = new JsonReader(bufferedReader);
+            reader.setLenient(true);
+            players = gson.fromJson(bufferedReader, playersList);
             fileReader.close();
         } catch (
                 IOException e) {

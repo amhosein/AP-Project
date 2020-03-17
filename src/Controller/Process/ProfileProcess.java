@@ -25,7 +25,7 @@ public class ProfileProcess extends MainProcess {
                 new Print("Password:");
                 String password = scanner.nextLine();
                 if (MenuHandler.currentMenu.Online.getPassword().equals(password)) {
-                    MenuHandler.currentMenu.Online.isDeleted = true;
+                    MenuHandler.currentMenu.Online.setDeleted(true);
                     Profile.getProfile().enterMenu(LoginMenu.getLoginMenu());
                 } else
                     throw new MyException("WrongPassword");

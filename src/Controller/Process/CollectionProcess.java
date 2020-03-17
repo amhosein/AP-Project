@@ -23,12 +23,14 @@ public class CollectionProcess extends MainProcess {
         try {
             if (pattern.allCards.matcher(input).find()) {
                 for (Card card : Primary.allCards) {
-                    new Print(card.getName());
+                    new Print(card);
                 }
+                CardsCollection.getCardsCollection().enterMenu(CardsCollection.getCardsCollection());
             } else if (pattern.allHeroes.matcher(input).find()) {
                 for (Hero hero : Primary.AllHeroes) {
                     new Print(hero.getName());
                 }
+                CardsCollection.getCardsCollection().enterMenu(CardsCollection.getCardsCollection());
             } else if (pattern.selectHero.matcher(input).find()) {
                 new Print("Please Select Your Hero");
                 String heroName = scanner.nextLine();
@@ -38,7 +40,7 @@ public class CollectionProcess extends MainProcess {
                     CardsCollection.getCardsCollection().enterMenu(DeckMenu.getDeckMenu());
                     checkInput(selected, MenuHandler.currentMenu.Online);
                 }
-            }else if (pattern.back.matcher(input).find()){
+            } else if (pattern.back.matcher(input).find()) {
                 CardsCollection.getCardsCollection().enterMenu(MainMenu.getMainMenu());
             }
         } catch (MyException e) {
@@ -79,7 +81,7 @@ public class CollectionProcess extends MainProcess {
                 for (Card card : player.getDecks().get(hero)) {
                     new Print(card);
                 }
-            }else if (pattern.back.matcher(input).find()){
+            } else if (pattern.back.matcher(input).find()) {
                 DeckMenu.getDeckMenu().enterMenu(CardsCollection.getCardsCollection());
             }
         } catch (MyException e) {

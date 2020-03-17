@@ -43,7 +43,6 @@ public abstract class Menu {
     public void enterMenu(Menu subMenu) {
         subMenu.setOnline(this.Online);
         MenuHandler.currentMenu = subMenu;
-        new Print().printMenu(subMenu);
         subMenu.process();
     }
 
@@ -56,6 +55,7 @@ public abstract class Menu {
         Scanner input = new Scanner(System.in);
         while (inputUser) {
             try {
+                new Print().printMenu(this);
                 new MainProcess(input.nextLine().toLowerCase()).MainProcess();
             } catch (MyException e) {
                 new Print(e.getMessage());

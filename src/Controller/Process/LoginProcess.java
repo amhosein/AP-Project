@@ -26,6 +26,8 @@ public class LoginProcess extends MainProcess {
             } else if (pattern.signIn.matcher(input).find()) {
                 String[] User_Pass = getPlayer();
                 Player.load(User_Pass[0], User_Pass[1]);
+                if (LoginMenu.getLoginMenu().Online.isDeleted())
+                    throw new MyException("This Account Has Been Deleted");
                 if (LoginMenu.getLoginMenu().Online.isLogged()) {
                     new Print(Output.SuccessFullLogin);
                     LoginMenu.getLoginMenu().enterMenu(MainMenu.getMainMenu());

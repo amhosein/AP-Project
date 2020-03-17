@@ -16,7 +16,7 @@ public class Card {
     ArrayList<Abilities> abilities;
 
 
-    Card(String Name, int Mana, int HP, int Damage, int cast,
+    Card(String Name, int Mana, int HP, int Damage,
          Rarity rarity, String Description, ArrayList<Abilities> abilities) {
         this.Mana = Mana;
         this.HP = HP;
