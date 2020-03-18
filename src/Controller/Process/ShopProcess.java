@@ -4,6 +4,8 @@ import Exeptions.MyException;
 import Model.Cards.Card;
 import Model.Menu.MainMenu;
 import Model.Menu.ShopMenu;
+import View.Logs.DoLogs.Logger;
+import View.Logs.DoLogs.Logs;
 import View.Menu.MenuHandler;
 import View.Output.Print;
 
@@ -17,21 +19,27 @@ public class ShopProcess extends MainProcess {
     }
 
     public void checkInput() throws MyException {
+        System.out.println("Your Wallet is : " + MenuHandler.currentMenu.onlinePlayer.getGold());
         Patterns pattern = new Patterns();
         try {
             if (pattern.back.matcher(input).find()) {
-                ShopMenu.getShopMenu().enterMenu(MainMenu.getMainMenu());
+                throw MyException.back;
             } else if (pattern.Buy.matcher(input).find()) {
                 Card card = getCard();
-                if (MenuHandler.currentMenu.Online.getGold() < card.getCast())
+                if (MenuHandler.currentMenu.onlinePlayer.getGold() < card.getCast())
                     throw new MyException("Not Enough Gold ");
-                MenuHandler.currentMenu.Online.addUnlockedCards(card);
-            }
-            if (pattern.Sell.matcher(input).find()) {
+                if (MenuHandler.currentMenu.onlinePlayer.getUnlockedCards().contains(card))
+                    throw new MyException("You have This Card");
+                new Logger(MenuHandler.currentMenu.onlinePlayer, card, Logs.buyCard);
+                MenuHandler.currentMenu.onlinePlayer.setGold(MenuHandler.currentMenu.onlinePlayer.getGold() - card.getCast());
+                MenuHandler.currentMenu.onlinePlayer.addUnlockedCards(card);
+            } else if (pattern.Sell.matcher(input).find()) {
                 Card card = getCard();
-                if (!MenuHandler.currentMenu.Online.getUnlockedCards().contains(card))
+                if (!MenuHandler.currentMenu.onlinePlayer.getUnlockedCards().contains(card))
                     throw new MyException("You dont have this Card");
-                MenuHandler.currentMenu.Online.getUnlockedCards().remove(card);
+                new Logger(MenuHandler.currentMenu.onlinePlayer, card, Logs.sellCard);
+                MenuHandler.currentMenu.onlinePlayer.setGold(MenuHandler.currentMenu.onlinePlayer.getGold() + card.getCast());
+                MenuHandler.currentMenu.onlinePlayer.getUnlockedCards().remove(card);
             }
         } catch (MyException e) {
             throw e;

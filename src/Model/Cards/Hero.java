@@ -11,7 +11,7 @@ public class Hero {
     private static HashMap<Hero, Card> specialCards = new HashMap<>();
 
     public Hero(String name, int health) {
-        this.name = name;
+        this.name = name.toLowerCase();
         this.health = health;
     }
 

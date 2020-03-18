@@ -4,6 +4,8 @@ import Exeptions.MyException;
 import Model.Menu.*;
 import View.Menu.MenuHandler;
 
+import java.io.IOException;
+
 public class MainProcess {
     String input;
 
@@ -11,7 +13,7 @@ public class MainProcess {
         this.input = input;
     }
 
-    public void MainProcess() throws MyException {
+    public void MainProcess() throws MyException, IOException {
         try {
             if (MenuHandler.currentMenu instanceof LoginMenu) {
                 new LoginProcess(input).checkInput();
@@ -23,9 +25,12 @@ public class MainProcess {
                 new ProfileProcess(input).checkInput();
             } else if (MenuHandler.currentMenu instanceof ShopMenu) {
                 new ShopProcess(input).checkInput();
+            } else if (MenuHandler.currentMenu instanceof DeckMenu) {
+                new DeckMenuProcess(input).checkInput();
             }
-        } catch (MyException e) {
+        } catch (MyException | IOException e) {
             throw e;
         }
     }
 }
+

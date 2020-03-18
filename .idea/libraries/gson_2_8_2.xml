@@ -2,6 +2,7 @@
   <library name="gson-2.8.2">
     <CLASSES>
       <root url="jar://$USER_HOME$/OneDrive/Documents/gson-2.8.2.jar!/" />
+      <root url="jar://$USER_HOME$/OneDrive/Documents/log4j.jar!/" />
     </CLASSES>
     <JAVADOC />
     <SOURCES />

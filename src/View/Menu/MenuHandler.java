@@ -13,7 +13,6 @@ public class MenuHandler {
         MainMenu.getMainMenu().addSubMenu(Profile.getProfile());
         MainMenu.getMainMenu().addSubMenu(Play.getPlay());
 
-        Play.getPlay().addSubMenu(CardsCollection.getCardsCollection());
         Play.getPlay().addSubMenu(GameModes.getGameModes());
 
         currentMenu = LoginMenu.getLoginMenu();

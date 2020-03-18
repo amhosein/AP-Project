@@ -8,11 +8,12 @@ public class Print {
     }
 
     public Print(Card card) {
-        System.out.println(card.getName()+"\t\t"+card.getDescription());
+        System.out.println(card.getName() + "\t\t" + card.getDescription());
     }
 
     public Print(String massage) {
         System.out.println(massage);
+        System.out.println("\n");
     }
 
     public Print(Output output) {

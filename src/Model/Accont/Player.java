@@ -4,6 +4,8 @@ import Model.Cards.Card;
 import Model.Menu.LoginMenu;
 import Exeptions.MyException;
 import Model.Cards.Hero;
+import View.Logs.DoLogs.Logger;
+import View.Logs.DoLogs.Logs;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
@@ -11,7 +13,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.*;
 
-import static Model.Primary.players;
+import static Model.Primary.*;
 
 
 public class Player {
@@ -21,31 +23,52 @@ public class Player {
     private String username;
     private String password;
     private Hero currentHero;
-    HashMap<Hero, ArrayList<Card>> Decks = new HashMap<>();
+    private String filePath;
+    private static HashMap<Hero, ArrayList<Card>> Decks = new HashMap<>();
     public boolean Deleted = false;
 
     public int gold = 50;
 
-    public Player(String username, String password) throws MyException {
+    public Player(String username, String password) throws MyException, IOException {
         this.username = username;
         this.password = password;
         try {
             newAccount();
-        } catch (MyException e) {
+        } catch (MyException | IOException e) {
             throw e;
         }
     }
 
-    private void newAccount() throws MyException {
+    private void newAccount() throws MyException, IOException {
         if (!hasAccount(this)) {
             players.add(this);
+            filePath = "src/View/Logs/UserLogs/" + username + ".log";
+            FileWriter fileWriter = new FileWriter(filePath, true);
+            fileWriter.write(username + ":" + getPassword() + "\n");
+            fileWriter.close();
+            new Logger(this, Logs.createAccount);
+            setDeafults();
             save();
             return;
         }
         throw MyException.alreadyCreated;
     }
 
-    private void save() {
+    private void setDeafults() {
+        currentHero = allHeroes.get(0);
+        unlockedHeroes.addAll(allHeroes);
+        for (Hero hero : allHeroes) {
+            Decks.put(hero, new ArrayList<>());
+        }
+        for (Card card : allCards) {
+            if (card.getCardClass() == Card.Classes.Neutral || card.getCardClass().toString().equals(currentHero.getName())) {
+                addUnlockedCards(card);
+                Decks.get(currentHero).add(card);
+            }
+        }
+    }
+
+    public void save() {
         Gson gson = new GsonBuilder().setPrettyPrinting().create();
         try {
             FileWriter fileWriter = new FileWriter("Accounts.json", false);
@@ -53,6 +76,7 @@ public class Player {
             fileWriter.write("\n");
             fileWriter.close();
         } catch (IOException e) {
+            e.getMessage();
         }
     }
 
@@ -61,7 +85,7 @@ public class Player {
             Player player = search(username);
             if (player.getPassword().equals(password)) {
                 logged = true;
-                LoginMenu.getLoginMenu().setOnline(player);
+                LoginMenu.getLoginMenu().setOnlinePlayer(player);
             } else throw new MyException("Wrong Password!");
         } catch (MyException e) {
             throw e;
@@ -85,7 +109,6 @@ public class Player {
             return false;
         }
     }
-
 
     public HashMap<Hero, ArrayList<Card>> getDecks() {
         return Decks;
@@ -149,5 +172,13 @@ public class Player {
 
     public void setCurrentHero(Hero currentHero) {
         this.currentHero = currentHero;
+    }
+
+    public void setFilePath(String filePath) {
+        this.filePath = filePath;
+    }
+
+    public String getFilePath() {
+        return filePath;
     }
 }

@@ -4,6 +4,8 @@ import Exeptions.MyException;
 import Model.Menu.LoginMenu;
 import Model.Menu.MainMenu;
 import Model.Menu.Profile;
+import View.Logs.DoLogs.Logger;
+import View.Logs.DoLogs.Logs;
 import View.Menu.MenuHandler;
 import View.Output.Print;
 
@@ -20,12 +22,13 @@ public class ProfileProcess extends MainProcess {
         Patterns pattern = new Patterns();
         try {
             if (pattern.back.matcher(input).find()) {
-                Profile.getProfile().enterMenu(MainMenu.getMainMenu());
+                throw MyException.back;
             } else if (pattern.deleteAccount.matcher(input).find()) {
                 new Print("Password:");
                 String password = scanner.nextLine();
-                if (MenuHandler.currentMenu.Online.getPassword().equals(password)) {
-                    MenuHandler.currentMenu.Online.setDeleted(true);
+                if (MenuHandler.currentMenu.onlinePlayer.getPassword().equals(password)) {
+                    MenuHandler.currentMenu.onlinePlayer.setDeleted(true);
+                    new Logger(MenuHandler.currentMenu.onlinePlayer, Logs.deleteAccount);
                     Profile.getProfile().enterMenu(LoginMenu.getLoginMenu());
                 } else
                     throw new MyException("WrongPassword");

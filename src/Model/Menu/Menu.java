@@ -6,12 +6,13 @@ import Model.Accont.Player;
 import View.Menu.MenuHandler;
 import View.Output.Print;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
 public abstract class Menu {
-    public Player Online;
+    public Player onlinePlayer;
     private Menu parentMenu;
     private List<Menu> subMenus = new ArrayList<>();
     private List<String> orders = new ArrayList<>();
@@ -28,8 +29,8 @@ public abstract class Menu {
         subMenu.parentMenu = this;
     }
 
-    public void setOnline(Player online) {
-        Online = online;
+    public void setOnlinePlayer(Player onlinePlayer) {
+        this.onlinePlayer = onlinePlayer;
     }
 
     public void setOrders(String order) {
@@ -41,9 +42,15 @@ public abstract class Menu {
     }
 
     public void enterMenu(Menu subMenu) {
-        subMenu.setOnline(this.Online);
+        subMenu.setOnlinePlayer(this.onlinePlayer);
         MenuHandler.currentMenu = subMenu;
         subMenu.process();
+    }
+
+    public void exitMenu() {
+        parentMenu.setOnlinePlayer(this.onlinePlayer);
+        MenuHandler.currentMenu = parentMenu;
+        parentMenu.process();
     }
 
     public String getName() {
@@ -54,13 +61,21 @@ public abstract class Menu {
         boolean inputUser = true;
         Scanner input = new Scanner(System.in);
         while (inputUser) {
+
             try {
                 new Print().printMenu(this);
                 new MainProcess(input.nextLine().toLowerCase()).MainProcess();
-            } catch (MyException e) {
-                new Print(e.getMessage());
+            } catch (MyException | IOException e) {
                 if (e == MyException.forceStop) {
                     inputUser = false;
+                }
+                if (e == MyException.back) {
+                    exitMenu();
+                }
+                new Print(e.getMessage());
+            } finally {
+                if (onlinePlayer != null) {
+                    onlinePlayer.save();
                 }
             }
         }

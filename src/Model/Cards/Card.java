@@ -37,7 +37,7 @@ public class Card {
 
     public static Card search(String name) throws MyException {
         for (Card card : Primary.allCards) {
-            if (card.getName().equals(name)) {
+            if (card.getName().toLowerCase().equals(name)) {
                 return card;
             }
         }
@@ -48,10 +48,14 @@ public class Card {
         return cast;
     }
 
+    public Classes getCardClass() {
+        return cardClass;
+    }
+
     public enum Classes {
         JackSparrow,
         Zeus,
         TsubasaOzara,
-        Neutral
+        Neutral;
     }
 }

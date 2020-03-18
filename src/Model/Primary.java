@@ -30,8 +30,8 @@ public class Primary {
 
     private static void initHeroes() {
         Hero JackSparrow = new Hero("Jack Sparrow", 30);
-        Hero Zeus = new Hero("Jack Sparrow", 30);
-        Hero TsubasaOzara = new Hero("Jack Sparrow", 30);
+        Hero Zeus = new Hero("Zeus", 30);
+        Hero TsubasaOzara = new Hero("TsubasaOzara", 30);
         allHeroes.add(JackSparrow);
         allHeroes.add(Zeus);
         allHeroes.add(TsubasaOzara);
@@ -77,6 +77,10 @@ public class Primary {
 
     private static void initPlayers() {
         try {
+            File file=new File("Accounts.json");
+            if (!file.exists()){
+                return;
+            }
             FileReader fileReader = new FileReader("Accounts.json");
             BufferedReader bufferedReader = new BufferedReader(fileReader);
             Gson gson = new Gson();
@@ -90,11 +94,15 @@ public class Primary {
                 IOException e) {
             e.printStackTrace();
         }
+        
     }
 
     private static void saveCharacters() {
         Gson gson = new GsonBuilder().setPrettyPrinting().create();
         try {
+            if (!new File("Accounts.json").exists()) {
+                return;
+            }
             FileWriter fileWriter = new FileWriter("Cards.json", false);
             gson.toJson(allCards, fileWriter);
             fileWriter.write("\n");
