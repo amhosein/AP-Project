@@ -12,8 +12,7 @@ public class Print {
     }
 
     public Print(String massage) {
-        System.out.println(massage);
-        System.out.println("\n");
+        System.out.println(massage + "\n");
     }
 
     public Print(Output output) {

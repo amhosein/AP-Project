@@ -1,7 +1,7 @@
 package Model.Menu;
 
 public class CardsCollection extends Menu {
-    public static CardsCollection cardsCollection;
+    private static CardsCollection cardsCollection;
 
     public static CardsCollection getCardsCollection() {
         if (cardsCollection == null)

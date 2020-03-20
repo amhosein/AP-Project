@@ -41,23 +41,28 @@ public class Player {
     }
 
     private void newAccount() throws MyException, IOException {
-        if (!hasAccount(this) || search(username).isDeleted()) {
+        try {
             if (search(username).isDeleted()) {
-                players.remove(search(username));
-                search(username).setDeleted(false);
+                if (search(username).isDeleted()) {
+                    players.remove(search(username));
+                }
             }
-            players.add(this);
-            filePath = "src/View/Logs/UserLogs/" + username + ".log";
-            FileWriter fileWriter = new FileWriter(filePath, false);
-            fileWriter.write(username + ":" + getPassword() + "\n");
-            fileWriter.close();
-            new Logger(this, Logs.createAccount);
-            setDeafults();
-            save();
-            return;
+        }catch (MyException e){
         }
-        throw MyException.alreadyCreated;
+        if (hasAccount(this)) {
+            throw MyException.alreadyCreated;
+        }
+        players.add(this);
+        filePath = "src/View/Logs/UserLogs/" + username + ".log";
+        FileWriter fileWriter = new FileWriter(filePath, false);
+        fileWriter.write(username + ":" + getPassword() + "\n");
+        fileWriter.close();
+        new Logger(this, Logs.createAccount);
+        setDeafults();
+        save();
+        return;
     }
+
 
     private void setDeafults() {
         currentHero = allHeroes.get(0);

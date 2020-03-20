@@ -22,9 +22,7 @@ public class ProfileProcess extends MainProcess {
     public void checkInput() throws MyException {
         Patterns pattern = new Patterns();
         try {
-            if (pattern.back.matcher(input).find()) {
-                throw MyException.back;
-            } else if (pattern.deleteAccount.matcher(input).find()) {
+            if (pattern.deleteAccount.matcher(input).find()) {
                 new Print("Password:");
                 String password = scanner.nextLine();
                 if (MenuHandler.currentMenu.onlinePlayer.getPassword().equals(password)) {

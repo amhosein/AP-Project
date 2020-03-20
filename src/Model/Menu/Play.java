@@ -11,7 +11,7 @@ public class Play extends Menu {
 
     public Play(String name) {
         super(name);
-        setOrders("1.Game Mods");
+        setOrders("1.Game Modes");
         setOrders("2.Back");
     }
 }

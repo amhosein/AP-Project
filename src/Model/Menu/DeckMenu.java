@@ -22,10 +22,11 @@ public class DeckMenu extends Menu {
 
     public DeckMenu(String name) {
         super(name);
-        setOrders("1.Add Cards");
-        setOrders("2.Remove Cards");
+        setOrders("1.Add Card");
+        setOrders("2.Remove Card");
         setOrders("3.Deck");
-        setOrders("4.Back");
+        setOrders("4.Can Add");
+        setOrders("5.Back");
     }
 
     public void addCard(Card card, Hero hero) throws MyException {
@@ -45,7 +46,7 @@ public class DeckMenu extends Menu {
                 for (Hero hero1 : Primary.allHeroes) {
                     if (!hero.getName().equals(hero1.getName())) {
                         if (hero1.getSpecialCards().contains(card))
-                        throw new MyException("Its special Card for anOther Hero!");
+                            throw new MyException("Its special Card for anOther Hero!");
                     }
                 }
                 new Logger(MenuHandler.currentMenu.onlinePlayer, card, Logs.addToDeck);
@@ -58,14 +59,20 @@ public class DeckMenu extends Menu {
     }
 
     public void remove(Card card, Hero hero) throws MyException {
-        if (!onlinePlayer.getDecks().get(hero.getName()).contains(card)) {
+        boolean Contains = false;
+        for (Card decksCard : onlinePlayer.getDecks().get(hero.getName())) {
+            if (decksCard.getName().equals(card.getName())) {
+                new Logger(MenuHandler.currentMenu.onlinePlayer, decksCard, Logs.removeFromDeck);
+                onlinePlayer.getDecks().get(hero.getName()).remove(decksCard);
+                Contains = true;
+                break;
+            }
+        }
+        if (!Contains) {
             throw new MyException("You dont Have This in Your Deck");
         }
         if (onlinePlayer.getDecks().get(hero.getName()).isEmpty()) {
             throw new MyException("You dont Have Any Card in Your Deck");
         }
-        new Logger(MenuHandler.currentMenu.onlinePlayer, card, Logs.removeFromDeck);
-        onlinePlayer.getDecks().get(hero.getName()).remove(card);
-
     }
 }

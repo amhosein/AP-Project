@@ -25,9 +25,7 @@ public class DeckMenuProcess extends MainProcess {
     protected void checkInput() throws MyException {
         Patterns pattern = new Patterns();
         try {
-            if (pattern.back.matcher(input).find()) {
-                throw MyException.back;
-            } else if (pattern.addCard.matcher(input).find()) {
+            if (pattern.addCard.matcher(input).find()) {
                 Card card = getCard();
                 DeckMenu.getDeckMenu().addCard(card, MenuHandler.currentMenu.onlinePlayer.getCurrentHero());
             } else if (pattern.removeCard.matcher(input).find()) {
@@ -39,12 +37,36 @@ public class DeckMenuProcess extends MainProcess {
                     new Logger(MenuHandler.currentMenu.onlinePlayer, Logs.seeDeck);
                     throw new MyException("No Cards in Your Deck");
                 }
+                int counter = 1;
                 for (Card card : MenuHandler.currentMenu.onlinePlayer.getDecks().get(MenuHandler.currentMenu.onlinePlayer.getCurrentHero().getName())) {
+                    System.out.print(counter + ".");
                     new Print(card);
+                    counter++;
                 }
                 new Logger(MenuHandler.currentMenu.onlinePlayer, Logs.seeDeck);
-            } else if (pattern.back.matcher(input).find()) {
-                DeckMenu.getDeckMenu().enterMenu(DeckMenu.getDeckMenu());
+            } else if (pattern.canAdd.matcher(input).find()) {
+                int counter = 1;
+                ArrayList<Card> deck = MenuHandler.currentMenu.onlinePlayer.getDecks().get(MenuHandler.currentMenu.onlinePlayer.getCurrentHero().getName());
+                outer:
+                for (Card card : MenuHandler.currentMenu.onlinePlayer.getUnlockedCards()) {
+                    for (Hero hero : MenuHandler.currentMenu.onlinePlayer.getUnlockedHeroes()) {
+                        if (!hero.getName().equals(MenuHandler.currentMenu.onlinePlayer.getCurrentHero().getName())) {
+                            if (hero.getSpecialCards().contains(card))
+                                continue outer;
+                        }
+                    }
+                    int cardsNum = 0;
+                    for (Card decksCard : deck) {
+                        if (decksCard.getName().equals(card.getName())) {
+                            cardsNum++;
+                            if (cardsNum >= 2)
+                                continue outer;
+                        }
+                    }
+                    System.out.print(counter + ".");
+                    new Print(card);
+                    counter++;
+                }
             }
         } catch (MyException e) {
             throw e;

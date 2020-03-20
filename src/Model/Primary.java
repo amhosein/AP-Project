@@ -55,7 +55,6 @@ public class Primary {
         allCards.add(KarkeroShot);
         Card TsubaMother = new Spell("Tsubasa Ozara's Mother", 3, 1, 0, Card.Classes.TsubasaOzara, Rarity.Rare, "She Can flirt With One Minion And convince It Not To Fight With U", new ArrayList<>(Collections.singletonList(Abilities.Poisonous)));
         TsubasaOzara.setSpecialCard(TsubaMother);
-        allHeroes.add(TsubasaOzara);
 
     }
 

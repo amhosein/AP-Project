@@ -6,15 +6,15 @@ import Model.Primary;
 import java.util.ArrayList;
 
 public class Card {
-    int Mana;
-    int HP;
-    int Damage;
-    int cast = 20;
-    Classes cardClass;
-    Rarity Rarity;
-    String Name;
-    String Description;
-    ArrayList<Abilities> abilities;
+    private int Mana;
+    private int HP;
+    private int Damage;
+    private int cast = 20;
+    private Classes cardClass;
+    private Rarity Rarity;
+    private String Name;
+    private String Description;
+    private ArrayList<Abilities> abilities;
 
     public Card(String name, int mana, int hp, int damage, Classes cardClass, Rarity rarity, String description, ArrayList<Abilities> abilities) {
         this.Mana = mana;
@@ -47,11 +47,6 @@ public class Card {
     public int getCast() {
         return cast;
     }
-
-    public Classes getCardClass() {
-        return cardClass;
-    }
-
     public enum Classes {
         JackSparrow("Jack Sparrow"),
         Zeus("Zeus"),
@@ -59,6 +54,7 @@ public class Card {
         Neutral("Neutral");
 
         String name;
+
         Classes(String name) {
             this.name = name;
         }
@@ -67,4 +63,25 @@ public class Card {
             return name;
         }
     }
+
+    public Classes getCardClass() {
+        return cardClass;
+    }
+
+    public int getMana() {
+        return Mana;
+    }
+
+    public int getHP() {
+        return HP;
+    }
+
+    public int getDamage() {
+        return Damage;
+    }
+
+    public Model.Cards.Rarity getRarity() {
+        return Rarity;
+    }
+
 }

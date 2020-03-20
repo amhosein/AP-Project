@@ -24,14 +24,21 @@ public class CollectionProcess extends MainProcess {
         Patterns pattern = new Patterns();
         try {
             if (pattern.allCards.matcher(input).find()) {
+                int counter = 0;
                 for (Card card : Primary.allCards) {
+                    System.out.print(counter + ".");
                     new Print(card);
+                    counter++;
                 }
+
                 new Logger(MenuHandler.currentMenu.onlinePlayer, Logs.allCards);
                 CardsCollection.getCardsCollection().enterMenu(CardsCollection.getCardsCollection());
             } else if (pattern.allHeroes.matcher(input).find()) {
+                int counter = 0;
                 for (Hero hero : Primary.allHeroes) {
+                    System.out.print(counter + ".");
                     new Print(hero.getName());
+                    counter++;
                 }
                 new Logger(MenuHandler.currentMenu.onlinePlayer, Logs.allHeroes);
                 CardsCollection.getCardsCollection().enterMenu(CardsCollection.getCardsCollection());
@@ -47,10 +54,9 @@ public class CollectionProcess extends MainProcess {
                     }
                 }
                 throw new MyException("You dont have this hero");
-            } else if (pattern.back.matcher(input).find()) {
-                throw MyException.back;
             }
-        } catch (MyException e) {
+        } catch (
+                MyException e) {
             throw e;
         }
     }

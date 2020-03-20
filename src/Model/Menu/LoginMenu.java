@@ -14,6 +14,7 @@ public class LoginMenu extends Menu {
         super(name);
         setOrders("1.Sign in");
         setOrders("2.Sing up");
+        setOrders("3.Force Stop");
     }
 
     public void call() {

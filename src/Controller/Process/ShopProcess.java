@@ -2,11 +2,14 @@ package Controller.Process;
 
 import Exeptions.MyException;
 import Model.Cards.Card;
+import Model.MarketPlace.ShopMenu;
+import Model.Primary;
 import View.Logs.DoLogs.Logger;
 import View.Logs.DoLogs.Logs;
 import View.Menu.MenuHandler;
 import View.Output.Print;
 
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class ShopProcess extends MainProcess {
@@ -20,24 +23,28 @@ public class ShopProcess extends MainProcess {
         System.out.println("Your Wallet is : " + MenuHandler.currentMenu.onlinePlayer.getGold());
         Patterns pattern = new Patterns();
         try {
-            if (pattern.back.matcher(input).find()) {
-                throw MyException.back;
+            if (pattern.canBuy.matcher(input).find()) {
+                int counter = 0;
+                for (Card card : ShopMenu.getShopMenu().setCanBuy()) {
+                    System.out.print(counter + ".");
+                    new Print(card);
+                    counter++;
+                }
             } else if (pattern.Buy.matcher(input).find()) {
                 Card card = getCard();
-                if (MenuHandler.currentMenu.onlinePlayer.getGold() < card.getCast())
-                    throw new MyException("Not Enough Gold ");
-                if (MenuHandler.currentMenu.onlinePlayer.getUnlockedCards().contains(card))
-                    throw new MyException("You have This Card");
-                new Logger(MenuHandler.currentMenu.onlinePlayer, card, Logs.buyCard);
-                MenuHandler.currentMenu.onlinePlayer.setGold(MenuHandler.currentMenu.onlinePlayer.getGold() - card.getCast());
-                MenuHandler.currentMenu.onlinePlayer.addUnlockedCards(card);
+                ShopMenu.getShopMenu().buyCards(card);
             } else if (pattern.Sell.matcher(input).find()) {
                 Card card = getCard();
-                if (!MenuHandler.currentMenu.onlinePlayer.getUnlockedCards().contains(card))
-                    throw new MyException("You dont have this Card");
-                new Logger(MenuHandler.currentMenu.onlinePlayer, card, Logs.sellCard);
-                MenuHandler.currentMenu.onlinePlayer.setGold(MenuHandler.currentMenu.onlinePlayer.getGold() + card.getCast());
-                MenuHandler.currentMenu.onlinePlayer.getUnlockedCards().remove(card);
+                ShopMenu.getShopMenu().SellCard(card);
+            } else if (pattern.canSell.matcher(input).find()) {
+                int counter = 1;
+                for (Card card : Primary.allCards) {
+                    if (!ShopMenu.getShopMenu().setCanBuy().contains(card)) {
+                        System.out.print(counter + ".");
+                        new Print(card);
+                        counter++;
+                    }
+                }
             }
         } catch (MyException e) {
             throw e;
