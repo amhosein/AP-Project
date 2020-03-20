@@ -1,5 +1,6 @@
 package View.Menu;
 
+import Model.MarketPlace.ShopMenu;
 import Model.Menu.*;
 
 public class MenuHandler {
@@ -14,6 +15,8 @@ public class MenuHandler {
         MainMenu.getMainMenu().addSubMenu(Play.getPlay());
 
         Play.getPlay().addSubMenu(GameModes.getGameModes());
+
+        CardsCollection.getCardsCollection().addSubMenu(DeckMenu.getDeckMenu());
 
         currentMenu = LoginMenu.getLoginMenu();
         LoginMenu.getLoginMenu().call();

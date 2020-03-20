@@ -1,4 +1,6 @@
-package Model.Menu;
+package Model.MarketPlace;
+
+import Model.Menu.Menu;
 
 public class ShopMenu extends Menu {
     private static ShopMenu shopMenu;

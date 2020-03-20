@@ -3,12 +3,13 @@ package Model.Cards;
 import Exeptions.MyException;
 import Model.Primary;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 public class Hero {
     private String name;
     private int health;
-    private static HashMap<Hero, Card> specialCards = new HashMap<>();
+    private ArrayList<Card> specialCards = new ArrayList<>();
 
     public Hero(String name, int health) {
         this.name = name.toLowerCase();
@@ -16,19 +17,6 @@ public class Hero {
     }
 
     public Hero() {
-    }
-
-
-    public static void setSpecialCard(Hero hero, Card card) {
-        specialCards.put(hero, card);
-    }
-
-    public static HashMap<Hero, Card> getSpecialCards() {
-        return specialCards;
-    }
-
-    public String getName() {
-        return name;
     }
 
     public static Hero search(String name) throws MyException {
@@ -39,4 +27,17 @@ public class Hero {
         }
         throw MyException.invalidHero;
     }
+
+    public void setSpecialCard(Card card) {
+        specialCards.add(card);
+    }
+
+    public ArrayList<Card> getSpecialCards() {
+        return specialCards;
+    }
+
+    public String getName() {
+        return name;
+    }
+
 }

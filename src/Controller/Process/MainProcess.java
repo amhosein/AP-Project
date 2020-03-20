@@ -1,6 +1,7 @@
 package Controller.Process;
 
 import Exeptions.MyException;
+import Model.MarketPlace.ShopMenu;
 import Model.Menu.*;
 import View.Menu.MenuHandler;
 
@@ -27,6 +28,8 @@ public class MainProcess {
                 new ShopProcess(input).checkInput();
             } else if (MenuHandler.currentMenu instanceof DeckMenu) {
                 new DeckMenuProcess(input).checkInput();
+            } else if (MenuHandler.currentMenu instanceof Play) {
+                new PlayMenuProcess(input).checkInput();
             }
         } catch (MyException | IOException e) {
             throw e;

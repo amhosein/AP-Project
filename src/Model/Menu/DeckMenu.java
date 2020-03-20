@@ -3,6 +3,7 @@ package Model.Menu;
 import Exeptions.MyException;
 import Model.Cards.Card;
 import Model.Cards.Hero;
+import Model.Primary;
 import View.Logs.DoLogs.Logger;
 import View.Logs.DoLogs.Logs;
 import View.Menu.MenuHandler;
@@ -31,9 +32,9 @@ public class DeckMenu extends Menu {
         int cardNum = 0;
         for (Card playerCards : onlinePlayer.getUnlockedCards()) {
             if (playerCards.getName().equals(card.getName())) {
-                if (onlinePlayer.getDecks().get(hero).size() >= 14)
+                if (onlinePlayer.getDecks().get(hero.getName()).size() >= 14)
                     throw new MyException("Yor Deck is Full");
-                for (Card playerCard : onlinePlayer.getDecks().get(hero)) {
+                for (Card playerCard : onlinePlayer.getDecks().get(hero.getName())) {
                     if (playerCard.getName().equals(card.getName())) {
                         cardNum++;
                     }
@@ -41,24 +42,30 @@ public class DeckMenu extends Menu {
                 if (cardNum >= 2) {
                     throw new MyException("You Have Two of This Card in You Current Deck");
                 }
-                if (!onlinePlayer.getCurrentHero().getName().equals(card.getCardClass().name()))
-                    new Logger(MenuHandler.currentMenu.onlinePlayer, card, Logs.addToDeck);
-                onlinePlayer.getDecks().get(hero).add(card);
+                for (Hero hero1 : Primary.allHeroes) {
+                    if (!hero.getName().equals(hero1.getName())) {
+                        if (hero1.getSpecialCards().contains(card))
+                        throw new MyException("Its special Card for anOther Hero!");
+                    }
+                }
+                new Logger(MenuHandler.currentMenu.onlinePlayer, card, Logs.addToDeck);
+                onlinePlayer.getDecks().get(hero.getName()).add(card);
+                return;
             }
         }
-        throw new MyException("This Card Is Lock Now");
+        throw new MyException("This Card is Lock Now");
 
     }
 
     public void remove(Card card, Hero hero) throws MyException {
-        if (!onlinePlayer.getDecks().get(hero).contains(card)) {
+        if (!onlinePlayer.getDecks().get(hero.getName()).contains(card)) {
             throw new MyException("You dont Have This in Your Deck");
         }
-        if (onlinePlayer.getDecks().get(hero).isEmpty()) {
+        if (onlinePlayer.getDecks().get(hero.getName()).isEmpty()) {
             throw new MyException("You dont Have Any Card in Your Deck");
         }
         new Logger(MenuHandler.currentMenu.onlinePlayer, card, Logs.removeFromDeck);
-        onlinePlayer.getDecks().get(hero).remove(card);
+        onlinePlayer.getDecks().get(hero.getName()).remove(card);
 
     }
 }

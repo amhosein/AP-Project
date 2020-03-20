@@ -53,9 +53,18 @@ public class Card {
     }
 
     public enum Classes {
-        JackSparrow,
-        Zeus,
-        TsubasaOzara,
-        Neutral;
+        JackSparrow("Jack Sparrow"),
+        Zeus("Zeus"),
+        TsubasaOzara("Tsubasa Ozara"),
+        Neutral("Neutral");
+
+        String name;
+        Classes(String name) {
+            this.name = name;
+        }
+
+        public String getName() {
+            return name;
+        }
     }
 }

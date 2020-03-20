@@ -9,6 +9,7 @@ import View.Logs.DoLogs.Logs;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
+import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.*;
@@ -24,7 +25,7 @@ public class Player {
     private String password;
     private Hero currentHero;
     private String filePath;
-    private static HashMap<Hero, ArrayList<Card>> Decks = new HashMap<>();
+    private HashMap<String, ArrayList<Card>> Decks = new HashMap<>();
     public boolean Deleted = false;
 
     public int gold = 50;
@@ -40,10 +41,14 @@ public class Player {
     }
 
     private void newAccount() throws MyException, IOException {
-        if (!hasAccount(this)) {
+        if (!hasAccount(this) || search(username).isDeleted()) {
+            if (search(username).isDeleted()) {
+                players.remove(search(username));
+                search(username).setDeleted(false);
+            }
             players.add(this);
             filePath = "src/View/Logs/UserLogs/" + username + ".log";
-            FileWriter fileWriter = new FileWriter(filePath, true);
+            FileWriter fileWriter = new FileWriter(filePath, false);
             fileWriter.write(username + ":" + getPassword() + "\n");
             fileWriter.close();
             new Logger(this, Logs.createAccount);
@@ -57,13 +62,14 @@ public class Player {
     private void setDeafults() {
         currentHero = allHeroes.get(0);
         unlockedHeroes.addAll(allHeroes);
-        for (Hero hero : allHeroes) {
-            Decks.put(hero, new ArrayList<>());
+        for (Hero hero : unlockedHeroes) {
+            Decks.put(hero.getName(), new ArrayList<>());
         }
         for (Card card : allCards) {
-            if (card.getCardClass() == Card.Classes.Neutral || card.getCardClass().toString().equals(currentHero.getName())) {
+            if (card.getCardClass() == Card.Classes.Neutral ||
+                    card.getCardClass().getName().toLowerCase().equals(currentHero.getName().toLowerCase())) {
                 addUnlockedCards(card);
-                Decks.get(currentHero).add(card);
+                Decks.get(currentHero.getName()).add(card);
             }
         }
     }
@@ -110,7 +116,7 @@ public class Player {
         }
     }
 
-    public HashMap<Hero, ArrayList<Card>> getDecks() {
+    public HashMap<String, ArrayList<Card>> getDecks() {
         return Decks;
     }
 

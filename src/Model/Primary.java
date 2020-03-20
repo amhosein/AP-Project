@@ -31,26 +31,31 @@ public class Primary {
     private static void initHeroes() {
         Hero JackSparrow = new Hero("Jack Sparrow", 30);
         Hero Zeus = new Hero("Zeus", 30);
-        Hero TsubasaOzara = new Hero("TsubasaOzara", 30);
+        Hero TsubasaOzara = new Hero("Tsubasa Ozara", 30);
         allHeroes.add(JackSparrow);
         allHeroes.add(Zeus);
         allHeroes.add(TsubasaOzara);
 
         Card BlackPearl = new Weapons("Black Pearl", 2, 2, 5, Card.Classes.JackSparrow, Rarity.Rare, "A Ship With Two Cannon", new ArrayList<>(Collections.singletonList(Abilities.Echo)));
-        Hero.setSpecialCard(JackSparrow, BlackPearl);
+        JackSparrow.setSpecialCard(BlackPearl);
+        allCards.add(BlackPearl);
         Card MonkeyJack = new Spell("Monkey Jack", 3, 1, 0, Card.Classes.JackSparrow, Rarity.Rare, "Discover a Weapon From Any Class and Add it to Your Adventure", new ArrayList<>(Collections.singletonList(Abilities.Discover)));
-        Hero.setSpecialCard(JackSparrow, MonkeyJack);
+        JackSparrow.setSpecialCard(MonkeyJack);
+        allCards.add(MonkeyJack);
 
         Card ZeusFury = new Spell("Zeus Fury", 2, 1, 6, Card.Classes.Zeus, Rarity.Rare, "Zeus Can Throw Two Thunder and Lightening", new ArrayList<>(Collections.singletonList(Abilities.TwinSpell)));
-        Hero.setSpecialCard(Zeus, ZeusFury);
+        Zeus.setSpecialCard(ZeusFury);
+        allCards.add(ZeusFury);
         Card GodMerci = new Weapons("Gods Merci", 2, 1, 1, Card.Classes.Zeus, Rarity.Rare, "Zeus Heal His Crew and Attack His Enemies", new ArrayList<>(Collections.singletonList(Abilities.TwinSpell)));
-        Hero.setSpecialCard(Zeus, GodMerci);
+        Zeus.setSpecialCard(GodMerci);
+        allCards.add(GodMerci);
 
         Card KarkeroShot = new Weapons("KaKero's Shot", 2, 1, 6, Card.Classes.TsubasaOzara, Rarity.Epic, "A Stunning Shot!", new ArrayList<>());
-        Hero.setSpecialCard(TsubasaOzara, KarkeroShot);
+        TsubasaOzara.setSpecialCard(KarkeroShot);
+        allCards.add(KarkeroShot);
         Card TsubaMother = new Spell("Tsubasa Ozara's Mother", 3, 1, 0, Card.Classes.TsubasaOzara, Rarity.Rare, "She Can flirt With One Minion And convince It Not To Fight With U", new ArrayList<>(Collections.singletonList(Abilities.Poisonous)));
-        Hero.setSpecialCard(TsubasaOzara, TsubaMother);
-
+        TsubasaOzara.setSpecialCard(TsubaMother);
+        allHeroes.add(TsubasaOzara);
 
     }
 
@@ -77,8 +82,8 @@ public class Primary {
 
     private static void initPlayers() {
         try {
-            File file=new File("Accounts.json");
-            if (!file.exists()){
+            File file = new File("Accounts.json");
+            if (!file.exists()) {
                 return;
             }
             FileReader fileReader = new FileReader("Accounts.json");
@@ -94,7 +99,7 @@ public class Primary {
                 IOException e) {
             e.printStackTrace();
         }
-        
+
     }
 
     private static void saveCharacters() {

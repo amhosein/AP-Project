@@ -2,8 +2,6 @@ package Controller.Process;
 
 import Exeptions.MyException;
 import Model.Cards.Card;
-import Model.Menu.MainMenu;
-import Model.Menu.ShopMenu;
 import View.Logs.DoLogs.Logger;
 import View.Logs.DoLogs.Logs;
 import View.Menu.MenuHandler;

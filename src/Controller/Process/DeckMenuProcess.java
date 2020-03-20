@@ -25,8 +25,7 @@ public class DeckMenuProcess extends MainProcess {
     protected void checkInput() throws MyException {
         Patterns pattern = new Patterns();
         try {
-            if (pattern.logout.matcher(input).find()) {
-                new Logger(MenuHandler.currentMenu.onlinePlayer, Logs.logout);
+            if (pattern.back.matcher(input).find()) {
                 throw MyException.back;
             } else if (pattern.addCard.matcher(input).find()) {
                 Card card = getCard();
@@ -36,12 +35,11 @@ public class DeckMenuProcess extends MainProcess {
                 DeckMenu.getDeckMenu().remove(card, MenuHandler.currentMenu.onlinePlayer.getCurrentHero());
             } else if (pattern.deck.matcher(input).find()) {
                 Hero hero = MenuHandler.currentMenu.onlinePlayer.getCurrentHero();
-                HashMap<Hero, ArrayList<Card>> deck = MenuHandler.currentMenu.onlinePlayer.getDecks();
-                if (deck.get(hero).size() == 0) {
+                if (MenuHandler.currentMenu.onlinePlayer.getDecks().get(hero.getName()).size() == 0) {
                     new Logger(MenuHandler.currentMenu.onlinePlayer, Logs.seeDeck);
                     throw new MyException("No Cards in Your Deck");
                 }
-                for (Card card : MenuHandler.currentMenu.onlinePlayer.getDecks().get(MenuHandler.currentMenu.onlinePlayer.getCurrentHero())) {
+                for (Card card : MenuHandler.currentMenu.onlinePlayer.getDecks().get(MenuHandler.currentMenu.onlinePlayer.getCurrentHero().getName())) {
                     new Print(card);
                 }
                 new Logger(MenuHandler.currentMenu.onlinePlayer, Logs.seeDeck);

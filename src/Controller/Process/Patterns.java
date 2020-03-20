@@ -21,4 +21,5 @@ public class Patterns {
     Pattern deleteAccount = Pattern.compile("delete account");
     Pattern Buy = Pattern.compile("buy");
     Pattern Sell = Pattern.compile("sell");
+    Pattern GameModes = Pattern.compile("game modes");
 }
