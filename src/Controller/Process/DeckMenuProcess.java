@@ -1,10 +1,7 @@
 package Controller.Process;
-
 import Exeptions.MyException;
-import Model.Accont.Player;
 import Model.Cards.Card;
 import Model.Cards.Hero;
-import Model.Menu.CardsCollection;
 import Model.Menu.DeckMenu;
 import View.Logs.DoLogs.Logger;
 import View.Logs.DoLogs.Logs;
@@ -12,7 +9,6 @@ import View.Menu.MenuHandler;
 import View.Output.Print;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.Scanner;
 
 public class DeckMenuProcess extends MainProcess {

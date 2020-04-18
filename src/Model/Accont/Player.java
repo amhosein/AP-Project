@@ -60,7 +60,6 @@ public class Player {
         new Logger(this, Logs.createAccount);
         setDeafults();
         save();
-        return;
     }
 
 
